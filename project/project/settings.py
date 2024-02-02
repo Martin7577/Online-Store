@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-2kg8mlwt_0)4#1al#f^lr1eyb3&@*!wm2sl1^j2xb26)j&(#93
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # 1
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -44,6 +44,12 @@ INSTALLED_APPS = [
     'fpages',
     'simpleapp',
     'django_filters',
+    'sign',
+    'protect',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
 ]
 
@@ -58,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -78,6 +84,13 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    ]
+
+
 
 WSGI_APPLICATION = 'project.wsgi.application'
 
@@ -138,8 +151,14 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
+LOGIN_URL = '/accounts/login/'
 
+LOGIN_REDIRECT_URL = '/'
 
-
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 
